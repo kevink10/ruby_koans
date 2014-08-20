@@ -30,20 +30,21 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
+  (1..6).to_a.inject(0) { |score, roll| score += rollScore(dice, roll) }
+end
+
+def rollScore(dice, roll)
   score = 0
-  numOfFives = numOfRolls(dice, 5)
-  if numOfFives >= 3
-    score += 500
-    numOfFives = numOfFives - 3
+  numberOfRolls = numOfRolls(dice, roll)
+  if numberOfRolls >= 3
+    score += roll == 1 ? 1000 : roll * 100
+    numberOfRolls = numberOfRolls - 3
   end
-  score += 50 * numOfFives 
-  numOfOnes = numOfRolls(dice, 1)
-  if numOfOnes >= 3
-    score += 1000
-    numOfOnes = numOfOnes - 3
+  if roll == 1
+    score += 100 * numberOfRolls
+  elsif roll == 5
+    score += 50 * numberOfRolls
   end
-  score += numOfOnes * 100
-  [2,3,4,6].each { |roll| score += roll*100 if numOfRolls(dice, roll) == 3 }
   score
 end
 
