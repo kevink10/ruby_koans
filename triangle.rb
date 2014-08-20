@@ -13,9 +13,9 @@
 # and
 #   about_triangle_project_2.rb
 #
-def triangle(a, b, c)
-  return :equilateral if a==b and a==c
-  return :isosceles if a==b or b==c or a==c
+def triangle(*args)
+  return :equilateral if args.uniq.size == 1
+  return :isosceles if args.uniq.size == 2
   :scalene
 end
 
