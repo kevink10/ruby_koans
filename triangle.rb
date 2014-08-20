@@ -14,9 +14,22 @@
 #   about_triangle_project_2.rb
 #
 def triangle(*args)
+  raise TriangleError if invalidTriangle *args
   return :equilateral if args.uniq.size == 1
   return :isosceles if args.uniq.size == 2
   :scalene
+end
+
+def invalidTriangle(*args)
+  invalidSides(*args) or invalidSidesSizes(*args)
+end
+
+def invalidSides(*args)
+  args.find_all { |side| side <= 0 }.any?
+end
+
+def invalidSidesSizes(*args)
+  args.permutation.to_a.find_all {|sides| sides[0] + sides[1] <= sides[2] }.any?
 end
 
 # Error class used in part 2.  No need to change this code.
